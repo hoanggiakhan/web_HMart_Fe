@@ -1,0 +1,44 @@
+.header {
+    background-color: #e74c3c;
+  }
+  
+  .navbar-brand, .nav-link {
+    color: #fff !important;
+  }
+  
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .navbar-toggler-icon {
+    color: #fff;
+  }
+  
+  .cart-dropdown {
+    width: 500px;
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  
+  .navbar-nav .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cartmount {
+    margin-left: 5px;
+  }
+  
+  .ml-3 {
+    margin-left: 1rem !important;
+  }
+  
+  .mr-3 {
+    margin-right: 1rem !important;
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
