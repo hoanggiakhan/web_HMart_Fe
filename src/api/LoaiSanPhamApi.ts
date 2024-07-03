@@ -1,38 +1,42 @@
-import React from "react";
-import { request } from "./Request";
+
+import GioHangModel from "../model/GioHangModel";
 import LoaiSanPhamModel from "../model/LoaiSanPhamModel";
+import React from "react";
+import { endpointBE } from "../utils/Enpoint";
+import { request } from "./Request";
 
 interface resultInterface {
-    danhSachLoaiSanPham: LoaiSanPhamModel[];
-    loaiSanPham: LoaiSanPhamModel;
- }
- 
- async function layLoaiSanPham(endpoint: string): Promise<resultInterface> {
-    // Gọi phương thức request()
-    const response = await request(endpoint);
-    // Lấy ra danh sách quyển sách
-    const danhSachLoaiSanPham: any = response._embedded.loaiSanPhams.map((duLieuLoaiSanPham: any) => ({
-       ...duLieuLoaiSanPham,
-    }))
- 
-    return { danhSachLoaiSanPham: danhSachLoaiSanPham , loaiSanPham: response.loaiSanPham };
- }
+   loaiSPList: LoaiSanPhamModel[];
+   loaiSP: LoaiSanPhamModel;
+}
 
- export async function layToanBoLoaiSanPham(): Promise<resultInterface> {
-    const endpoint =   "http://localhost:8080/loai-san-pham?sort=maLoaiSanPham";
- 
-    return layLoaiSanPham(endpoint);
- }
+async function getGenre(endpoint: string): Promise<resultInterface> {
+   // Gọi phương thức request()
+   const response = await request(endpoint);
 
- export async function layMotLoaiSanPham(maLoaiSanPham: number): Promise<resultInterface> {
-    const endpoint = `http://localhost:8080/loai-san-pham/${maLoaiSanPham}`;
-    const response = await request(endpoint);
- 
-    return { loaiSanPham: response, danhSachLoaiSanPham: response };
- }
+   // Lấy ra danh sách quyển sách
+   const loaiSPList: any = response._embedded.loaiSanPhams.map((genreData: any) => ({
+      ...genreData,
+   }))
 
- export async function layLoaiSanPhamTheoMaSP(maSanPham: number): Promise<resultInterface> {
-    const endpoint = `http://localhost:8080/san-pham/${maSanPham}/danhSachLoaiSanPham`;
- 
-    return layLoaiSanPham(endpoint);
- }
+   return { loaiSPList: loaiSPList, loaiSP: response.l};
+}
+
+export async function getAllGenres(): Promise<resultInterface> {
+   const endpoint = endpointBE + "/loai-san-pham?sort=maLoaiSanPham";
+
+   return getGenre(endpoint);
+}
+
+export async function get1Genre(maLoaiSanPham: number): Promise<resultInterface> {
+   const endpoint = endpointBE + `/loai-san-pham/${maLoaiSanPham}`;
+   const response = await request(endpoint);
+
+   return { loaiSP: response, loaiSPList: response };
+}
+
+export async function getGenreByIdSanpham(maSanPham: number): Promise<resultInterface> {
+   const endpoint = endpointBE + `/san-pham/${maSanPham}/danhSachLoaiSanPham`;
+
+   return getGenre(endpoint);
+}

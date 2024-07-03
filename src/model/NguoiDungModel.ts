@@ -1,41 +1,41 @@
 class NguoiDungModel {
     id?: any;
-    idUser: number;
-    dateOfBirth: Date;
-    deliveryAddress: string;
-    purchaseAddress?: string;
+    maNguoiDung: number;
+    ngaySinh: Date;
+    diaChiGiaoHang: string;
+    diaChiMuaHang?: string;
     email: string;
-    firstName: string;
-    lastName: string;
-    gender: string;
-    password?: string;
-    phoneNumber: string;
-    username: string;
+    hoDem: string;
+    ten: string;
+    gioiTinh: string;
+    matKhau?: string;
+    soDienThoai: string;
+    tenDangNhap: string;
     avatar: string;
-    role?: number;
+    quyen?: number;
  
-    constructor(idUser: number,
-       dateOfBirth: Date,
-       deliveryAddress: string,
-       purchaseAddress: string,
+    constructor(maNguoiDung: number,
+       ngaySinh: Date,
+       diaChiGiaoHang: string,
+       diaChiMuaHang: string,
        email: string,
-       firstName: string,
-       lastName: string,
-       gender: string,
-       password: string,
-       phoneNumber: string,
-       username: string, avatar: string) {
-       this.idUser = idUser;
-       this.dateOfBirth = dateOfBirth;
-       this.deliveryAddress = deliveryAddress;
-       this.purchaseAddress = purchaseAddress;
+       hoDem: string,
+       ten: string,
+      gioiTinh: string,
+       matKhau: string,
+       soDienThoai: string,
+       tenDangNhap: string, avatar: string) {
+       this.maNguoiDung = maNguoiDung;
+       this.ngaySinh = ngaySinh;
+       this.diaChiGiaoHang = diaChiGiaoHang;
+       this.diaChiMuaHang = diaChiMuaHang;
        this.email = email;
-       this.firstName = firstName;
-       this.lastName = lastName;
-       this.gender = gender;
-       this.password = password;
-       this.phoneNumber = phoneNumber;
-       this.username = username;
+       this.hoDem = hoDem;
+       this.ten = ten;
+       this.gioiTinh =gioiTinh;
+       this.matKhau = matKhau;
+       this.soDienThoai = soDienThoai;
+       this.tenDangNhap = tenDangNhap;
        this.avatar = avatar;
     }
  }

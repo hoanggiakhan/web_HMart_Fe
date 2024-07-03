@@ -7,6 +7,7 @@ export interface JwtPayload {
 	role: string;
 	ten: string;
 	daKichHoat: boolean;
+	avartar : string;
 }
 
 const RequireAdmin = <P extends object>(
@@ -20,7 +21,7 @@ const RequireAdmin = <P extends object>(
 
 			// Nếu chưa đăng nhập thì về trang /login
 			if (!token) {
-				navigate("/dang-nhap");
+				navigate("/login");
 				return;
 			}
 

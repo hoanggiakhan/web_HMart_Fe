@@ -21,14 +21,14 @@ export async function layAnhCuaMotSanPham(duongDan:string):Promise<HinhAnhModel[
   }
   return ketQua;
 }
-export async function layToanBoAnh(maSanPham : number):Promise<HinhAnhModel[]>{
+
+export async function layMotAnh(maSanPham : number):Promise<HinhAnhModel[]>{
+    // xác định endpoit
+     const duongDan : string = `http://localhost:8080/san-pham/${maSanPham}/danhSachHinhAnh?sort=maHinhAnh,asc&page=0&size=1`;
+     return layAnhCuaMotSanPham(duongDan);
+  }
+  export async function layToanBoAnh(maSanPham : number):Promise<HinhAnhModel[]>{
     // xác định endpoit
      const duongDan : string = `http://localhost:8080/san-pham/${maSanPham}/danhSachHinhAnh`;
      return layAnhCuaMotSanPham(duongDan);
-}
-
-export async function layMotAnh(maSanPham : number):Promise<HinhAnhModel[]>{
-  // xác định endpoit
-   const duongDan : string = `http://localhost:8080/san-pham/${maSanPham}/danhSachHinhAnh?sort=maHinhAnh,asc&page=0&size=1`;
-   return layAnhCuaMotSanPham(duongDan);
 }
