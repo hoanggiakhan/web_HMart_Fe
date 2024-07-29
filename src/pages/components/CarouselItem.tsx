@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from "react";
-import SanPhamModel from "../../model/SanPhamModel";
-import { layMotAnh } from "../../api/HinhAnhAPI";
-import HinhAnhModel from "../../model/HinhAnhModel";
+import ProductModel from "../../model/ProductModel";
+import ImageModel from "../../model/ImageModel";
+import { getOneImage } from "../../api/ImageApi";
+
 
 
 
   interface CarouselItemInterface{
-     sanPham : SanPhamModel;
+     product : ProductModel;
   }
 const CarouselItem : React.FC<CarouselItemInterface> = (props)=>{
-    const maSanPham : number=props.sanPham.maSanPham;
-    const [danhSachHinhAnh,setDanhSachHinhAnh] = useState<HinhAnhModel[]>([]);
-    const [dangTaiDuLieu,setDangTaiDuLieu] = useState(true);
-    const [baoLoi,setBaoLoi] = useState(null);
+    const idProduct : number=props.product.idProduct;
+    const [imageList,setImageList] = useState<ImageModel[]>([]);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState(null);
     useEffect(()=>{
-     layMotAnh(maSanPham).then(
-         hinhAnhData =>{
-             setDanhSachHinhAnh(hinhAnhData);
-             setDangTaiDuLieu(false)
+     getOneImage(idProduct).then(
+         imageData =>{
+             setImageList(imageData);
+             setLoading(false)
          }
      ).catch(
          error => {
-             setBaoLoi(error.message);
+             setError(error.message);
          }
      );
  },[]);
-    if(dangTaiDuLieu){
+    if(loading){
      return(
        <div>
           <h1>Đang tải dữ liệu</h1>
@@ -33,26 +34,26 @@ const CarouselItem : React.FC<CarouselItemInterface> = (props)=>{
      );
     }
  
-    if(baoLoi){
+    if(error){
      return(
        <div>
-          <h1>Gặp lỗi : {baoLoi}</h1>
+          <h1>Gặp lỗi : {error}</h1>
        </div>
      );
     }
-    let duLieuAnh:string ="";
-    if(danhSachHinhAnh[0] && danhSachHinhAnh[0].duLieuAnh){
-        duLieuAnh=danhSachHinhAnh[0].duLieuAnh;
+    let dataImage:string ="";
+    if(imageList[0] && imageList[0].dataImage){
+        dataImage=imageList[0].dataImage;
     }
       return(
       
         <div className="row align-items-center">
             <div className="col-5 text-center">
-                <img src={duLieuAnh} className="float-end" style={{ width: '150px' }} />
+                <img src={dataImage} className="float-end" style={{ width: '150px' }} />
             </div>
             <div className="col-7">
-                <h5>{props.sanPham.tenSanPham}</h5>
-                <p>{props.sanPham.moTa}</p>
+                <h5>{props.product.nameProduct}</h5>
+                <p>{props.product.description}</p>
             </div>
         </div>
     );

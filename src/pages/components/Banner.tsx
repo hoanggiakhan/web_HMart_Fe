@@ -7,10 +7,10 @@ function Banner() {
 		<div className='container-fluid pt-5 pb-4 text-dark d-flex justify-content-center align-items-center'>
 			<div>
 				<h3
-					data-text='Chào mừng bạn đến với siêu thị Khanh-mart'
+					data-text='Chào mừng bạn đến với siêu thị H-Mart'
 					className='banner-text display-5 fw-bold '
 				>
-					Chào mừng bạn đến với siêu thị Khanh-mart
+					Chào mừng bạn đến với siêu thị H-Mart
 				</h3>
 				<p className=''>Đặt niềm tin vào sản phẩm - Đặt sự hài lòng lên hàng đầu</p>
 				<Link to={"/search"}>

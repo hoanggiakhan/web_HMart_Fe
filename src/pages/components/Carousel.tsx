@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { layBaSanPhamMoiNhat } from "../../api/SanPhamApi";
+import ProductModel from "../../model/ProductModel";
+import { getNewProduct } from "../../api/ProductApi";
 import CarouselItem from "./CarouselItem";
-import SanPhamModel from "../../model/SanPhamModel";
 
 
 const Carousel : React.FC=()=>{
-  const [danhSachSanPham,setDanhSachSanPham] = useState<SanPhamModel[]>([]);
-   const [dangTaiDuLieu,setDangTaiDuLieu] = useState(true);
-   const [baoLoi,setBaoLoi] = useState(null);
+  const [productList,setProductList] = useState<ProductModel[]>([]);
+   const [loading,setLoading] = useState(true);
+   const [error,setError] = useState(null);
    useEffect(()=>{
-    layBaSanPhamMoiNhat().then(
+    getNewProduct().then(
         kq=>{
-            setDanhSachSanPham(kq.sanPhamList);
-            setDangTaiDuLieu(false)
+            setProductList(kq.productList);
+            setLoading(false)
         }
     ).catch(
         error => {
-            setBaoLoi(error.message);
+            setError(error.message);
         }
     );
 },[]);
-   if(dangTaiDuLieu){
+   if(loading){
     return(
       <div>
          <h1>Đang tải dữ liệu</h1>
@@ -28,10 +28,10 @@ const Carousel : React.FC=()=>{
     );
    }
 
-   if(baoLoi){
+   if(error){
     return(
       <div>
-         <h1>Gặp lỗi : {baoLoi}</h1>
+         <h1>Gặp lỗi : {error}</h1>
       </div>
     );
    }
@@ -41,13 +41,13 @@ const Carousel : React.FC=()=>{
         <div id="carouselExampleDark" className="carousel carousel-dark slide">
             <div className="carousel-inner">
                 <div className="carousel-item active" data-bs-interval="10000">
-                    <CarouselItem key={0} sanPham={danhSachSanPham[0]} />
+                    <CarouselItem key={0} product={productList[0]} />
                 </div>
                 <div className="carousel-item " data-bs-interval="10000">
-                    <CarouselItem key={1} sanPham={danhSachSanPham[1]} />
+                    <CarouselItem key={1} product={productList[1]} />
                 </div>
                 <div className="carousel-item " data-bs-interval="10000">
-                    <CarouselItem key={2} sanPham={danhSachSanPham[2]} />
+                    <CarouselItem key={2} product={productList[2]} />
                 </div>
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">

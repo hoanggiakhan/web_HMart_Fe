@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer(){
     return(
@@ -36,9 +37,9 @@ function Footer(){
                 <div className="col-md-4">
                     <h5>Chính sách</h5>
                     <ul className="list-unstyled">
-                        <li><a href="#" style={{textDecoration :'none'}} className="text-white">Chính sách bảo mật</a></li>
-                        <li><a href="#" style={{textDecoration :'none'}} className="text-white">Điều khoản sử dụng</a></li>
-                        <li><a href="#" style={{textDecoration :'none'}} className="text-white">Chính sách hoàn trả</a></li>
+                       <Link to={'/info/delivery-policy'} className="text-white"> <li>Chính sách giao hàng</li> </Link>
+                       <Link to={'/info/delivery-policy'} className="text-white"> <li>Điều khoản sử dụng</li></Link>
+                       <Link to={'/info/delivery-policy'} className="text-white">  <li>Chính sách hoàn trả</li></Link>
                     </ul>
                 </div>
                 <div className="col-md-4">
@@ -50,7 +51,7 @@ function Footer(){
             </div>
             <hr className="my-4"/>
             <div className="text-center">
-                <p>&copy; 2024 Khanh-Mart. Đặt chất lượng và dịch vụ lên hàng đầu.</p>
+                <p>&copy; 2024 H-Mart. Đặt chất lượng và dịch vụ lên hàng đầu.</p>
             </div>
         </div>
     </footer>

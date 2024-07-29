@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 export interface JwtPayload {
-	maNguoiDung: any;
+	id: any;
 	role: string;
-	ten: string;
-	daKichHoat: boolean;
-	avartar : string;
+	avatar: string;
+	lastName: string;
+	enabled: boolean;
 }
 
 const RequireAdmin = <P extends object>(

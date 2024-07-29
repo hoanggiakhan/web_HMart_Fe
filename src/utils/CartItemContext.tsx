@@ -1,43 +1,43 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import GioHangModel from "../model/GioHangModel";
+import CartItemModel from "../model/CartItemModel";
 
 
-interface GioHangProps {
+interface CartItemProps {
 	children: React.ReactNode;
 }
 
-interface GioHangType {
-	gioHangList: GioHangModel[];
-	setGioHangList: any;
-	tongSP: number;
-	setTongSP: any;
+interface CartItemType {
+	cartList: CartItemModel[];
+	setCartList: any;
+	totalCart: number;
+	setTotalCart: any;
 }
 
-const GioHang = createContext<GioHangType | undefined>(undefined);
+const CartItem = createContext<CartItemType | undefined>(undefined);
 
-export const GioHangProvider: React.FC<GioHangProps> = (props) => {
-	const [gioHangList, setGioHangList] = useState<GioHangModel[]>([]);
-	const [tongSP, setTongSP] = useState(0);
+export const CartItemProvider: React.FC<CartItemProps> = (props) => {
+	const [cartList, setCartList] = useState<CartItemModel[]>([]);
+	const [totalCart, setTotalCart] = useState(0);
 
 	useEffect(() => {
 		const cartData: string | null = localStorage.getItem("cart");
-		let cart: GioHangModel[] = [];
+		let cart: CartItemModel[] = [];
 		cart = cartData ? JSON.parse(cartData) : [];
-		setGioHangList(cart);
-		setTongSP(cart.length);
+		setCartList(cart);
+		setTotalCart(cart.length);
 	}, []);
 
 	return (
-		<GioHang.Provider
-			value={{ gioHangList, setGioHangList, tongSP, setTongSP }}
+		<CartItem.Provider
+			value={{ cartList, setCartList, totalCart, setTotalCart }}
 		>
 			{props.children}
-		</GioHang.Provider>
+		</CartItem.Provider>
 	);
 };
 
-export const useCartItem = (): GioHangType => {
-	const context = useContext(GioHang);
+export const useCartItem = (): CartItemType => {
+	const context = useContext(CartItem);
 	if (!context) {
 		throw new Error("Lỗi context");
 	}

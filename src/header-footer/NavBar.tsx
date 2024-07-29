@@ -12,25 +12,25 @@ import {
 import { Avatar, Button } from "@mui/material";
 import { useAuth } from "../utils/AuthContext";
 import { useCartItem } from "../utils/CartItemContext";
-import LoaiSanPhamModel from "../model/LoaiSanPhamModel";
-import { getAllGenres } from "../api/LoaiSanPhamAPI";
-import { AdminEnpoint } from "../user/AdminEnpoint";
+import ProductTypeModel from "../model/ProductTypeModel";
+import { getAllProductType } from "../api/ProductTypeApi";
+import { AdminEnpoint } from "../admin/AdminEnpoint";
 
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-	const { tongSP, setTongSP, setGioHangList } = useCartItem();
+	const { totalCart, setTotalCart, setCartList } = useCartItem();
 	const { setLoggedIn } = useAuth();
 	const navigate = useNavigate();
 
 	// Lấy tất cả thể loại
-	const [loaiSPList, setLoaiSPList] = useState<LoaiSanPhamModel[]>([]);
+	const [productTypeList, setProductTypeList] = useState<ProductTypeModel[]>([]);
 	const [baoLoi, setBaoLoi] = useState(null);
 
 	useEffect(() => {
-		getAllGenres()
+		getAllProductType()
 			.then((response) => {
-				setLoaiSPList(response.loaiSPList);
+				setProductTypeList(response.productTypeList);
 			})
 			.catch((error) => {
 				setBaoLoi(error.message);
@@ -74,12 +74,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 				>
 					{/* <!-- Navbar brand --> */}
 					<Link className='navbar-brand mt-2 mt-lg-0' to='/'>
-						<img
-							src={"./../../../images/public/3.jpg"}
-							width='50'
-							alt='MDB Logo'
-							loading='lazy'
-						/>
+						<h5>H-Mart</h5>
 					</Link>
 					{/* <!-- Left links --> */}
 					<ul className='navbar-nav me-auto mb-2 mb-lg-0'>
@@ -99,14 +94,14 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 								Loại Sản Phẩm
 							</a>
 							<ul className='dropdown-menu'>
-								{loaiSPList.map((genre, index) => {
+								{productTypeList.map((productType, index) => {
 									return (
 										<li key={index}>
 											<Link
 												className='dropdown-item'
-												to={`/search/${genre.maLoaiSanPham}`}
+												to={`/search/${productType.idProductType}`}
 											>
-												{genre.tenLoaiSanPham}
+												{productType.nameProductType}
 											</Link>
 										</li>
 									);
@@ -124,18 +119,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 								Giới thiệu
 							</NavLink>
 						</li>
-						<li className='nav-item'>
-							<Link className='nav-link' to={"/policy"}>
-								Chính sách
-							</Link>
-						</li>
-						{isToken() && (
-							<li className='nav-item'>
-								<NavLink className='nav-link' to={"/feedback"}>
-									Feedback
-								</NavLink>
-							</li>
-						)}
 					</ul>
 					{/* <!-- Left links --> */}
 				</div>
@@ -146,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 					<Link className='text-reset me-3' to='/cart'>
 						<i className='fas fa-shopping-cart'></i>
 						<span className='badge rounded-pill badge-notification bg-danger'>
-							{tongSP ? tongSP : ""}
+							{totalCart ? totalCart : ""}
 						</span>
 					</Link>
 					{!isToken() && (
@@ -224,14 +207,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 											Thông tin cá nhân
 										</Link>
 									</li>
-									<li>
-										<Link
-											className='dropdown-item'
-											to='/my-favorite-books'
-										>
-											Sách yêu thích của tôi
-										</Link>
-									</li>
+									
 									{getRoleByToken() === "ADMIN" && (
 										<li>
 											<Link
@@ -247,10 +223,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 											className='dropdown-item'
 											style={{ cursor: "pointer" }}
 											onClick={() => {
-												setTongSP(0);
+												setTotalCart(0);
 												logout(navigate);
 												setLoggedIn(false);
-												setGioHangList([]);
+												setCartList([]);
 											}}
 										>
 											Đăng xuất

@@ -1,8 +1,10 @@
 import React from "react";
-import Banner from "./components/Banner";
 import useScrollToTop from "../hooks/ScrollToTop";
-import Carousel from "./components/Carousel";
-import SanPhamList from "../products/SanPhamList";
+import Banner from "./components/Banner";
+import { Carousel } from "react-responsive-carousel";
+import ProductList from "../products/ProductList";
+
+
 
 interface HomePageProps {}
 
@@ -20,15 +22,15 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 			</div>
 			{/* Slide img */}
 			<div className=''>
-				<Carousel />
+				<Carousel/>
 			</div>
 			{/* Hot Product */}
 			{/* <HotBookList /> */}
 			{/* New Product */}
 			{/* <NewBookList /> */}
 			{/* Product List */}
-			{/* <BookList size={8} /> */}
-			<SanPhamList size={8} />
+			<ProductList size={8} />
+			{/* <SanPhamList size={8} /> */}
 		</>
 	);
 };

@@ -67,7 +67,7 @@ const Pagination: React.FC<PaginationInterface> = (props) => {
 					}
 				>
 					<button className='page-link' tabIndex={-1}>
-						Trang đầu
+						Previous
 					</button>
 				</li>
 				{/* Hiện trang đầu tiên */}
@@ -124,7 +124,7 @@ const Pagination: React.FC<PaginationInterface> = (props) => {
 							: () => props.handlePagination(props.currentPage + 1)
 					}
 				>
-					<button className='page-link'>Trang cuối</button>
+					<button className='page-link'>Next</button>
 				</li>
 			</ul>
 		</nav>

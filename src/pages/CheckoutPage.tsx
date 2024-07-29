@@ -6,32 +6,32 @@ import {
 	RadioGroup,
 	TextField,
 } from "@mui/material";
-import React, { FormEvent, useEffect, useState } from "react";
-import GioHangModel from "../model/GioHangModel";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import useScrollToTop from "../hooks/ScrollToTop";
-import { useCartItem } from "../utils/CartItemContext";
-import NguoiDungModel from "../model/NguoiDungModel";
+import React, { FormEvent, useEffect, useState } from "react";
 import { getIdUserByToken } from "../utils/JwtService";
-import { get1User } from "../api/NguoiDungApi";
-import { endpointBE } from "../utils/Enpoint";
 import { toast } from "react-toastify";
+import { endpointBE } from "../utils/Constant";
+import { CheckoutSuccess } from "./components/CheckoutSuccess";
+import { useCartItem } from "../utils/CartItemContext";
+import CartItemModel from "../model/CartItemModel";
+import useScrollToTop from "../hooks/ScrollToTop";
+import UserModel from "../model/UserModel";
+import { get1User } from "../api/UserApi";
 import { checkPhoneNumber } from "../utils/Validation";
-import { SanPhamHorizontal } from "../products/SanPhamHorizontalProps";
-import { CheckoutSuccess } from "./CheckoutSuccess";
-
+import { ProductHorizontal } from "../products/components/ProductHorizontalProps";
 
 interface CheckoutPageProps {
 	setIsCheckout: any;
-	cartList: GioHangModel[];
+	cartList: CartItemModel[];
 	totalPriceProduct: number;
+
 	isBuyNow?: boolean;
 }
 
 export const CheckoutPage: React.FC<CheckoutPageProps> = (props) => {
 	useScrollToTop();
 
-	const { setGioHangList, setTongSP } = useCartItem();
+	const { setCartList, setTotalCart } = useCartItem();
 
 	const [isSuccessPayment, setIsSuccessPayment] = useState(false);
 	// Xử lý phương thức thanh toán
@@ -49,15 +49,15 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = (props) => {
 	};
 
 	// Lấy dữ liệu của người dùng lên
-	const [user, setUser] = useState<NguoiDungModel>();
+	const [user, setUser] = useState<UserModel>();
 	useEffect(() => {
-		const maNguoiDung = getIdUserByToken();
-		get1User(maNguoiDung)
+		const idUser = getIdUserByToken();
+		get1User(idUser)
 			.then((response) => {
 				setUser(response);
-				setFullName(response.hoDem + " " + response.ten);
-				setPhoneNumber(response.soDienThoai);
-				setDeliveryAddress(response.diaChiGiaoHang);
+				setFullName(response.firstName + " " + response.lastName);
+				setPhoneNumber(response.phoneNumber);
+				setDeliveryAddress(response.deliveryAddress);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -72,20 +72,20 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = (props) => {
 
 		props.cartList.forEach((cartItem) => {
 			productsRequest.push({
-				sanPham: cartItem.sanPham,
-				soLuong: cartItem.soLuong,
+				product: cartItem.product,
+				quantity: cartItem.quantity,
 			});
 		});
 
 		const request = {
-			maNguoiDung: getIdUserByToken(),
-			maThanhToan: payment,
+			idUser: getIdUserByToken(),
+			idPayment: payment,
 			fullName,
 			phoneNumber,
 			email: user?.email,
 			deliveryAddress,
-			tongTien: props.totalPriceProduct,
-			sanPham: productsRequest,
+			totalPriceProduct: props.totalPriceProduct,
+			product: productsRequest,
 			note,
 		};
 
@@ -125,7 +125,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = (props) => {
 
 	const handleSaveOrder = (request: any, isPayNow?: boolean) => {
 		const token = localStorage.getItem("token");
-		fetch(endpointBE + "/don-hangs/them-don-hang", {
+		fetch(endpointBE + "/order/add-order", {
 			method: "POST",
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -139,8 +139,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = (props) => {
 					setIsSuccessPayment(true);
 				}
 				if (!props.isBuyNow) {
-					setGioHangList([]);
-					setTongSP(0);
+					setCartList([]);
+					setTotalCart(0);
 				}
 				toast.success("Thanh toán thành công");
 			})
@@ -308,8 +308,8 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = (props) => {
 							<div className='col-2 text-center'>Tổng tiền</div>
 						</div>
 						{props.cartList.map((cartItem) => (
-							<SanPhamHorizontal
-								key={cartItem.maGioHang}
+							<ProductHorizontal
+								key={cartItem.idCart}
 								cartItem={cartItem}
 							/>
 						))}

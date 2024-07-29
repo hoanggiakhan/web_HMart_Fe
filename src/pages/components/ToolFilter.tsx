@@ -6,37 +6,37 @@ import Select from "@mui/material/Select";
 import { SelectChangeEvent } from "@mui/material/Select/SelectInput";
 import { Icon, NativeSelect, TextField } from "@mui/material";
 import { green, red } from "@mui/material/colors";
-import LoaiSanPhamModel from "../../model/LoaiSanPhamModel";
-import { getAllGenres } from "../../api/LoaiSanPhamAPI";
+import ProductTypeModel from "../../model/ProductTypeModel";
+import { getAllProductType } from "../../api/ProductTypeApi";
 
 
 interface ToolFilterProps {
 	setSize: any;
-	setTuKhoaTimKiem: any;
-	setmaLoaiSanPham: any;
+	setKeySearch: any;
+	setIdProductType: any;
 	setFilter: any;
 	size: number;
-	tuKhoaTimKiem: string;
-	maLoaiSanPham: number;
+	keySearch: string;
+	idProductType: number;
 	filter: number;
 }
 
 const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 	// Xử lý input search (giống bên navbar)
 	// let keySearchTemp: string = "";
-	const [keySearchTemp, setKeySearchTemp] = useState(props.tuKhoaTimKiem);
+	const [keySearchTemp, setKeySearchTemp] = useState(props.keySearch);
 	// Khi thay đổi value ở ô input thì sẽ tự động cập nhật lại component
 	const onSetKeySearch = (e: ChangeEvent<HTMLInputElement>) => {
 		setKeySearchTemp(e.target.value);
 
 		if (e.target.value.trim() === "") {
-			props.setTuKhoaTimKiem(e.target.value);
+			props.setKeySearch(e.target.value);
 		}
 	};
 
 	// Khi nhấn vào nút search
 	const submitSearch = () => {
-		props.setTuKhoaTimKiem(keySearchTemp);
+		props.setKeySearch(keySearchTemp);
 	};
 
 	// Khi nhấn enter thì sẽ submit search
@@ -47,11 +47,11 @@ const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 	};
 
 	// Thay đổi giá trị thể loại
-	const handleChangeGenre = (event: SelectChangeEvent) => {
+	const handleChangeProductType = (event: SelectChangeEvent) => {
 		// if (event.target.value === "") {
 		// 	props.setIdGenre(0);
 		// } else {
-		props.setmaLoaiSanPham(event.target.value);
+		props.setIdProductType(event.target.value);
 		// }
 	};
 
@@ -65,11 +65,11 @@ const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 	};
 
 	// Lấy tất cả thể loại ra
-	const [genres, setGenres] = useState<LoaiSanPhamModel[] | null>(null);
+	const [producTypes, setProductTypes] = useState<ProductTypeModel[] | null>(null);
 	useEffect(() => {
-		getAllGenres()
+		getAllProductType()
 			.then((response) => {
-				setGenres(response.loaiSPList);
+				setProductTypes(response.productTypeList);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -84,24 +84,24 @@ const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 						{/* Genre */}
 						<FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
 							<InputLabel id='demo-simple-select-helper-label'>
-								Loại sản phẩm
+								Danh mục sản phẩm
 							</InputLabel>
 							<Select
 								labelId='demo-simple-select-helper-label'
 								id='demo-simple-select-helper'
-								value={props.maLoaiSanPham? props.maLoaiSanPham + "" : ""}
-								label='Thể loại sản phẩm'
+								value={props.idProductType ? props.idProductType + "" : ""}
+								label='Thể loại sách'
 								autoWidth
-								onChange={handleChangeGenre}
+								onChange={handleChangeProductType}
 								sx={{ minWidth: "150px" }}
 							>
 								<MenuItem value=''>
 									<em>None</em>
 								</MenuItem>
-								{genres?.map((genre, index) => {
+								{producTypes?.map((productType, index) => {
 									return (
-										<MenuItem value={genre.maLoaiSanPham} key={index}>
-											{genre.tenLoaiSanPham}
+										<MenuItem value={productType.idProductType} key={index}>
+											{productType.nameProductType}
 										</MenuItem>
 									);
 								})}
@@ -130,13 +130,22 @@ const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 								<MenuItem value={3}>
 									<span className='d-inline-flex align-items-center'>
 										Giá tăng dần
-										
+										<Icon
+											sx={{
+												flex: "1",
+												color: green[500],
+											}}
+										>
+											trending_up
+										</Icon>
 									</span>
 								</MenuItem>
 								<MenuItem value={4}>
 									<span className='d-inline-flex align-items-center'>
 										Giá giảm dần
-										
+										<Icon sx={{ flex: "1", color: red[500] }}>
+											trending_down
+										</Icon>
 									</span>
 								</MenuItem>
 								<MenuItem value={5}>Sản phẩm bán chạy nhất</MenuItem>
@@ -152,7 +161,7 @@ const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 							<TextField
 								size='small'
 								id='outlined-search'
-								label='Tìm kiếm'
+								label='Tìm kiếm theo tên sản phẩm'
 								type='search'
 								value={keySearchTemp}
 								onChange={onSetKeySearch}
@@ -162,7 +171,7 @@ const ToolFilter: React.FC<ToolFilterProps> = (props) => {
 								style={{ height: "40px" }}
 								type='button'
 								className='btn btn-primary ms-2'
-								onClick={() => props.setTuKhoaTimKiem(keySearchTemp)}
+								onClick={() => props.setKeySearch(keySearchTemp)}
 							>
 								<i className='fas fa-search'></i>
 							</button>

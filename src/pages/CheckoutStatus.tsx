@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { CheckoutSuccess } from "./components/CheckoutSuccess";
+import { CheckoutFail } from "./components/CheckoutFail";
+import { endpointBE } from "../utils/Constant";
 import { getIdUserByToken } from "../utils/JwtService";
 import { useAuth } from "../utils/AuthContext";
-import { endpointBE } from "../utils/Enpoint";
-import { CheckoutSuccess } from "./CheckoutSuccess";
-import { CheckoutFail } from "./CheckoutFail";
 
 const CheckoutStatus: React.FC = () => {
 	const { isLoggedIn } = useAuth();
@@ -27,7 +27,7 @@ const CheckoutStatus: React.FC = () => {
 			setIsSuccess(true);
 		} else {
 			const token = localStorage.getItem("token");
-			fetch(endpointBE + "/don-hangs/cancel-donhang", {
+			fetch(endpointBE + "/order/cancel-order", {
 				method: "PUT",
 				headers: {
 					Authorization: `Bearer ${token}`,

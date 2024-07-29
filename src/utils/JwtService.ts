@@ -1,6 +1,5 @@
 import { jwtDecode } from "jwt-decode";
 import { JwtPayload } from "../admin/RequireAdmin";
-
 export function isTokenExpired(token: string) {
    const decodedToken = jwtDecode(token);
 
@@ -23,13 +22,19 @@ export function isToken() {
 }
 
 
-
+export function getAvatarByToken() {
+   const token = localStorage.getItem('token');
+   if (token) {
+      const decodedToken = jwtDecode(token) as JwtPayload;
+      return decodedToken.avatar;
+   }
+}
 
 export function getLastNameByToken() {
    const token = localStorage.getItem('token');
    if (token) {
       const decodedToken = jwtDecode(token) as JwtPayload;
-      return decodedToken.ten;
+      return decodedToken.lastName;
    }
 }
 
@@ -39,18 +44,12 @@ export function getUsernameByToken() {
       return jwtDecode(token).sub;
    }
 }
-export function getAvatarByToken() {
-   const token = localStorage.getItem('token');
-   if (token) {
-      const decodedToken = jwtDecode(token) as JwtPayload;
-      return decodedToken.avartar;
-   }
-}
+
 export function getIdUserByToken() {
    const token = localStorage.getItem('token');
    if (token) {
       const decodedToken = jwtDecode(token) as JwtPayload;
-      return decodedToken.maNguoiDung;
+      return decodedToken.id;
    }
 }
 
