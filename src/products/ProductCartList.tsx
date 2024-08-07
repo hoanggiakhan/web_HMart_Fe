@@ -23,7 +23,7 @@ const ProductCartList: React.FC<ProductCartListProps> = () => {
 	}, [cartList, setTotalCart]); // Khúc này đang bị overloading
 
 	const navigation = useNavigate();
-	// Xử lý xoá sách
+	// Xử lý xoá sản phẩm
 	function handleRemoveProduct(idProduct: number) {
 		const newCartList = cartList.filter(
 			(cartItem) => cartItem.product.idProduct !== idProduct

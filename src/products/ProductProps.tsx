@@ -100,7 +100,7 @@ const ProductProps: React.FC<ProductProps> = ({ product }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Xử lý chức năng yêu sách
+   
     useEffect(() => {
         getAllImage(product.idProduct).then(
             imageData => {

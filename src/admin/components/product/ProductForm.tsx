@@ -67,14 +67,14 @@ export const ProductForm: React.FC<ProductFormProps> = (props) => {
         }
     }, [props.option, props.id]);
 
-    // Khúc này lấy ra tất cả thể loại để cho vào select
+    // Khúc này lấy ra tất cả loại  để cho vào select
     useEffect(() => {
         getAllProductType().then((response) => {
             setProductTypeList(response.productTypeList);
         });
     }, [props.option]);
 
-    // Khúc này để lưu danh sách thể loại của sách
+    // Khúc này để lưu danh sách thể loại của sản phẩm
     useEffect(() => {
         setProduct({ ...product, idProductType: productTypesListSelected });
     }, [productTypesListSelected]);
@@ -89,7 +89,7 @@ export const ProductForm: React.FC<ProductFormProps> = (props) => {
             productRequest = { ...product, sellPrice: product.listPrice };
         }
 
-        // console.log(book);
+       
 
         setStatusBtn(true);
 

@@ -16,7 +16,7 @@ const FilterPage: React.FC<FilterPageProps> = (props) => {
 	useScrollToTop(); // Mỗi lần vào component này thì sẽ ở trên cùng
 
 	const [size, setSize] = useState(12); // Hiển thị bao nhiêu sản phẩm
-	const [keySearch, setKeySearch] = useState(""); // Từ khoá của sách
+	const [keySearch, setKeySearch] = useState(""); // Từ khoá của sản phẩm
 	const [idProductType, setIdProductType] = useState(0); // Thể loại muốn hiển thị
 	const [filter, setFilter] = useState(0); // Lọc theo chế độ gì (tên từ A - Z, Z - A, ...)
 

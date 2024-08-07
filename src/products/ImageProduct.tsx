@@ -49,22 +49,6 @@ const ImageProduct : React.FC<ImageProduct> = (props)=>{
         dataIamge=imageList[0].dataImage;
     }
       return(
-    //     <div className="row">
-    //     <div>
-    //         {(hinhAnhDangChon) && <img src={hinhAnhDangChon.duLieuAnh} />}
-    //     </div>
-    //         <div className="row mt-2">
-    //             {
-    //                 danhSachHinhAnh.map((hinhAnh, index) => (
-    //                     <div className={"col-3"} key={index}>
-    //                         <img onClick={() => chonAnh(hinhAnh)} src={hinhAnh.duLieuAnh} style={{ width: '50px' }} />
-    //                     </div>
-    //                 ))
-    //             }
-    //         </div>
-    // </div>
-
-
     <div className="row">
     <div className="col-12">
         <Carousel showArrows={true} showIndicators={true} >

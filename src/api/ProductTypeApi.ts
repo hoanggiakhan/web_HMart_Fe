@@ -12,7 +12,7 @@ async function getProductType(endpoint: string): Promise<resultInterface> {
    // Gọi phương thức request()
    const response = await request(endpoint);
 
-   // Lấy ra danh sách quyển sách
+   // Lấy ra danh sách sản phẩm
    const productTypeList: any = response._embedded.productTypes.map((productTypeData: any) => ({
       ...productTypeData,
    }))
@@ -26,12 +26,7 @@ export async function getAllProductType(): Promise<resultInterface> {
 
 }
 
-// export async function get1Genre(idGenre: number): Promise<resultInterface> {
-//    const endpoint = endpointBE + `/genre/${idGenre}`;
-//    const response = await request(endpoint);
 
-//    return { genre: response, genreList: response };
-// }
 
 export async function getProductTypeByIdProduct(idProduct: number): Promise<resultInterface> {
    const endpoint = endpointBE + `/products/${idProduct}/listProductTypes`;

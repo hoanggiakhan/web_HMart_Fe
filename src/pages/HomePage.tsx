@@ -24,13 +24,8 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 			<div className=''>
 				<Carousel/>
 			</div>
-			{/* Hot Product */}
-			{/* <HotBookList /> */}
-			{/* New Product */}
-			{/* <NewBookList /> */}
-			{/* Product List */}
 			<ProductList size={8} />
-			{/* <SanPhamList size={8} /> */}
+			
 		</>
 	);
 };

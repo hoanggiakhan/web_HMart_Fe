@@ -26,7 +26,7 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
 	useScrollToTop(); // Mỗi lần vào component này thì sẽ ở trên cùng
 	const { setTotalCart, cartList } = useCartItem();
 
-	// Lấy mã sách từ url
+	// Lấy mã sản phẩm từ url
 	const { idProduct } = useParams();
 	let idProductNumber: number = 0;
 
@@ -44,7 +44,7 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
 	const [product, setProduct] = useState<ProductModel | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [erroring, setErroring] = useState(null);
-	// Lấy sách ra
+	// Lấy sản phẩm ra
 	useEffect(() => {
 		getProductById(idProductNumber)
 			.then((response) => {
@@ -57,7 +57,7 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
 			});
 	}, []);
 
-	// Lấy ra thể loại của sách
+	// Lấy ra thể loại của sản phẩm
 	const [productType, setProductType] = useState<ProductTypeModel[] | null>(null);
 	useEffect(() => {
 		getProductTypeByIdProduct(idProductNumber).then((response) => {
@@ -66,7 +66,7 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
 	}, []);
 	const idProductType : number | undefined = 1;
 	
-	// Lấy ra hình ảnh của sách
+	// Lấy ra hình ảnh của sản phẩm
 	const [images, setImages] = useState<ImageModel[] | null>(null);
 	useEffect(() => {
 		getAllImage(idProductNumber)

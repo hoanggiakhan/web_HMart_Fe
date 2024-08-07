@@ -178,7 +178,7 @@ export async function getProductById(idProduct: number): Promise<ProductModel | 
       // Kiểm tra xem dữ liệu endpoint trả về có dữ liệu không
       if (response) {
          productResponse = response;
-         // Trả về quyển sách
+         // Trả về sản phẩm
          const responseImg = await getAllImage(response.idProduct);
          const thumbnail = responseImg.filter(image => image.dataImage);
          return {
@@ -205,7 +205,7 @@ export async function getProductByIdCartItem(idCart: number): Promise<ProductMod
       // Kiểm tra xem dữ liệu endpoint trả về có dữ liệu không
       if (response) {
 
-         // Trả về quyển sách
+         // Trả về sản phẩm
          return response;
       } else {
          throw new Error("Sản phẩm không tồn tại");
@@ -224,7 +224,7 @@ export async function getTotalNumberOfProducts(): Promise<number> {
       const response = await requestAdmin(endpoint);
       // Kiểm tra xem dữ liệu endpoint trả về có dữ liệu không
       if (response) {
-         // Trả về số lượng cuốn sách
+         // Trả về số lượng sản phẩm
          return response;
       }
    } catch (error) {
@@ -238,7 +238,7 @@ export async function get3BestSellerProducts(): Promise<ProductModel[]> {
 
    // Use Promise.all to wait for all promises in the map to resolve
    let newProductList = await Promise.all(productList.productList.map(async (product: any) => {
-      // Trả về quyển sách
+      // Trả về sản phẩm
       const responseImg = await getAllImage(product.idProduct);
       const thumbnail = responseImg.find(image => image.isIcon);
 
@@ -250,7 +250,6 @@ export async function get3BestSellerProducts(): Promise<ProductModel[]> {
 
    return newProductList;
 }
-// // Lấy sách theo id (lấy thumbnail, ảnh liên quan, thể loại)
 export async function getProductByIdAllInformation(idProduct: number): Promise<ProductModel | null> {
    let productResponse: ProductModel = {
       idProduct: 0,
@@ -274,10 +273,10 @@ export async function getProductByIdAllInformation(idProduct: number): Promise<P
 
       // Kiểm tra xem dữ liệu endpoint trả về có dữ liệu không
       if (response) {
-         // Lưu dữ liệu sách
+         // Lưu dữ liệu sản phẩm
          productResponse = response;
 
-         // Lấy tất cả hình ảnh của sách
+         // Lấy tất cả hình ảnh của sản phẩm
          const imagesList = await getAllImage(response.idProduct);
          const thumbnail = imagesList.find((image) => image.isIcon);
          const relatedImg = imagesList.map((image) => {
@@ -289,7 +288,7 @@ export async function getProductByIdAllInformation(idProduct: number): Promise<P
 
        productResponse = { ...productResponse, relatedImg: relatedImg as string[], dataImage: thumbnail?.urlImage || thumbnail?.dataImage };
 
-         // Lấy tất cả thể loại của sách
+         // Lấy tất cả thể loại của sản phẩm
          const productTypesList = await getProductTypeByIdProduct(response.idProduct);
          productTypesList.productTypeList.forEach((productType) => {
             const dataProductType: ProductTypeModel = { idProductType: productType.idProductType, nameProductType: productType.nameProductType };

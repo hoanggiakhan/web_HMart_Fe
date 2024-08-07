@@ -41,7 +41,6 @@ const ProductList: React.FC<ProductListProps> = (props) => {
 	}
 
 	useEffect(() => {
-		// Mặc đinh sẽ gọi getAllBook
 		if (
 			(props.keySearch === "" &&
 				props.idProductType === 0 &&
@@ -125,7 +124,7 @@ const ProductList: React.FC<ProductListProps> = (props) => {
 		);
 	}
 
-	// Kiểm tra danh sách sách xem có phần tử nào không
+	// Kiểm tra danh sách sản phẩm xem có phần tử nào không
 	if (productList.length === 0) {
 		return (
 			<div className='container-book container mb-5 px-5 px-5 bg-light'>
